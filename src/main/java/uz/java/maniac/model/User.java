@@ -4,22 +4,26 @@ import lombok.*;
 import uz.java.maniac.model.dto.UserDto;
 import uz.java.maniac.model.template.AbsEntityInteger;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-@Entity(name = "my_user")
-@Table(uniqueConstraints={@UniqueConstraint(columnNames = {"name", "pass"})})
+@Entity(name = "mob_users")
+@Table(uniqueConstraints={@UniqueConstraint(columnNames = {"PHONE", "PASS"})})
 public class User implements EntityInterface<User,UserDto>{
     @Id
+    @Column(name = "idn")
     private Integer id;
+
+    @Column(name = "FULL_NAME")
+    private String fullName;
+
+    @Column(name = "PHONE")
     private String name;
+    @Column(name = "PASS")
     private String pass;
 
 

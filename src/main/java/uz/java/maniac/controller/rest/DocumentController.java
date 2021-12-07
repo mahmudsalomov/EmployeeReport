@@ -3,13 +3,13 @@ package uz.java.maniac.controller.rest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import uz.java.maniac.component.CurrentUser;
 import uz.java.maniac.model.Document;
 import uz.java.maniac.model.dto.DocumentDto;
 import uz.java.maniac.service.DocumentService;
+
+import java.util.Date;
 
 @RestController
 @CrossOrigin
@@ -47,5 +47,11 @@ public class DocumentController implements ControllerInterface<HttpEntity<?>, Do
     @Override
     public HttpEntity<?> delete(Integer id, UserDetails user) {
         return null;
+    }
+
+    @GetMapping("/check/{date}")
+    public HttpEntity<?> check(@CurrentUser UserDetails user, @PathVariable Date date){
+        boolean b=documentService.check(user,date);
+        return ResponseEntity.ok(b);
     }
 }

@@ -1,5 +1,6 @@
 package uz.java.maniac.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import uz.java.maniac.model.Document;
@@ -14,6 +15,9 @@ import java.util.Optional;
 
 @Service
 public class DocumentService implements ServiceInterface<Document, DocumentDto>{
+
+    @Value("${edit.deadline.limit}")
+    private long limit;
 
     private final DocumentRepository documentRepository;
     private final UserRepository userRepository;
@@ -84,7 +88,7 @@ public class DocumentService implements ServiceInterface<Document, DocumentDto>{
 
     protected Document blocker(Document document){
         try {
-            if (document.isEditPermission()&&new Date().getTime()-document.getReportDate().getTime()>86400000){
+            if (document.isEditPermission()&&new Date().getTime()-document.getReportDate().getTime()>limit){
                 document.setEditPermission(false);
                 return documentRepository.save(document);
             }
@@ -96,4 +100,22 @@ public class DocumentService implements ServiceInterface<Document, DocumentDto>{
     }
 
 
+    public boolean check(UserDetails user, Date date) {
+        Optional<User> optionalUser = userRepository.findByNameAndPass(user.getUsername(), user.getPassword());
+        if (optionalUser.isPresent()){
+
+            Optional<Document> document = documentRepository.findByUserIdAndReportDate(optionalUser.get().getId(), date);
+
+            if (document.isPresent()){
+                if (document.get().isEditPermission()&&new Date().getTime()-document.get().getReportDate().getTime()>limit){
+                    document.get().setEditPermission(false);
+                    documentRepository.save(document.get());
+                }
+                return document.get().isEditPermission();
+            }
+            return true;
+
+        }
+        return false;
+    }
 }

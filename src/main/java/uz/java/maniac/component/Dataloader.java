@@ -47,82 +47,82 @@ public class Dataloader implements CommandLineRunner {
 
             List<Task> tasks=taskRepository.findAll();
 
-            if (tasks.size()==0){
-                Task task1 = taskRepository.save(Task
-                        .builder()
-                        .name("Uchrashuv")
-                        .description("asdasd")
-                        .build());
-                Task task2 = taskRepository.save(Task
-                        .builder()
-                        .name("Sotuv")
-                        .description("qqqqqq")
-                        .build());
-
-                Task task3 = taskRepository.save(Task
-                        .builder()
-                        .name("Komandirovka")
-                        .description("a")
-                        .build());
-
-
-                //Task1
-                fieldRepository.save(Field
-                        .builder()
-                        .taskId(task1.getId())
-                        .placeholder("Ism")
-                        .type(InputType.TEXT)
-                        .name("Kim bilan?")
-                        .build());
-
-                fieldRepository.save(Field
-                        .builder()
-                        .taskId(task1.getId())
-                        .placeholder("Sabab")
-                        .type(InputType.TEXTAREA)
-                        .name("Nima sababdan?")
-                        .build());
-                fieldRepository.save(Field
-                        .builder()
-                        .taskId(task1.getId())
-                        .placeholder("Vaqt")
-                        .type(InputType.DATE)
-                        .name("Uchrashuv vaqti")
-                        .build());
-
-                //Task2
-                fieldRepository.save(Field
-                        .builder()
-                        .taskId(task2.getId())
-                        .placeholder("Mahsulot")
-                        .type(InputType.TEXT)
-                        .name("Nima mahsulot?")
-                        .build());
-                fieldRepository.save(Field
-                        .builder()
-                        .taskId(task2.getId())
-                        .placeholder("Narxi")
-                        .type(InputType.NUMBER)
-                        .name("Mahsulot narxi?")
-                        .build());
-
-                //Task3
-                fieldRepository.save(Field
-                        .builder()
-                        .taskId(task3.getId())
-                        .placeholder("Qayerga")
-                        .type(InputType.TEXT)
-                        .name("Qayerga")
-                        .build());
-
-                fieldRepository.save(Field
-                        .builder()
-                        .taskId(task3.getId())
-                        .placeholder("Qancha vaqtga (kun)")
-                        .type(InputType.NUMBER)
-                        .name("Qancha vaqtga? (kun)")
-                        .build());
-            }
+//            if (tasks.size()==0){
+//                Task task1 = taskRepository.save(Task
+//                        .builder()
+//                        .name("Uchrashuv")
+//                        .description("asdasd")
+//                        .build());
+//                Task task2 = taskRepository.save(Task
+//                        .builder()
+//                        .name("Sotuv")
+//                        .description("qqqqqq")
+//                        .build());
+//
+//                Task task3 = taskRepository.save(Task
+//                        .builder()
+//                        .name("Komandirovka")
+//                        .description("a")
+//                        .build());
+//
+//
+//                //Task1
+//                fieldRepository.save(Field
+//                        .builder()
+//                        .taskId(task1.getId())
+//                        .placeholder("Ism")
+//                        .type(InputType.TEXT)
+//                        .name("Kim bilan?")
+//                        .build());
+//
+//                fieldRepository.save(Field
+//                        .builder()
+//                        .taskId(task1.getId())
+//                        .placeholder("Sabab")
+//                        .type(InputType.TEXTAREA)
+//                        .name("Nima sababdan?")
+//                        .build());
+//                fieldRepository.save(Field
+//                        .builder()
+//                        .taskId(task1.getId())
+//                        .placeholder("Vaqt")
+//                        .type(InputType.DATE)
+//                        .name("Uchrashuv vaqti")
+//                        .build());
+//
+//                //Task2
+//                fieldRepository.save(Field
+//                        .builder()
+//                        .taskId(task2.getId())
+//                        .placeholder("Mahsulot")
+//                        .type(InputType.TEXT)
+//                        .name("Nima mahsulot?")
+//                        .build());
+//                fieldRepository.save(Field
+//                        .builder()
+//                        .taskId(task2.getId())
+//                        .placeholder("Narxi")
+//                        .type(InputType.NUMBER)
+//                        .name("Mahsulot narxi?")
+//                        .build());
+//
+//                //Task3
+//                fieldRepository.save(Field
+//                        .builder()
+//                        .taskId(task3.getId())
+//                        .placeholder("Qayerga")
+//                        .type(InputType.TEXT)
+//                        .name("Qayerga")
+//                        .build());
+//
+//                fieldRepository.save(Field
+//                        .builder()
+//                        .taskId(task3.getId())
+//                        .placeholder("Qancha vaqtga (kun)")
+//                        .type(InputType.NUMBER)
+//                        .name("Qancha vaqtga? (kun)")
+//                        .build());
+//            }
 
         }
 

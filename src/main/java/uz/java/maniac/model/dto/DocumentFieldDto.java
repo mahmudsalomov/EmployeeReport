@@ -16,6 +16,8 @@ public class DocumentFieldDto implements DtoInterface<DocumentField,DocumentFiel
     public FieldDto field;
     public Integer fieldId;
     public Integer taskNumber;
+    public TaskDto taskDto;
+    public Integer taskId;
 
     @Override
     public DocumentField toEntity() {
@@ -28,6 +30,8 @@ public class DocumentFieldDto implements DtoInterface<DocumentField,DocumentFiel
                 .taskNumber(taskNumber)
                 .field(field.toEntity())
                 .fieldId(fieldId)
+                .taskId(taskId)
+                .task(field.task.toEntity())
                 .build();
     }
 }

@@ -16,7 +16,7 @@ import java.sql.Timestamp;
 public class DocumentField extends AbsEntityInteger implements EntityInterface<DocumentField, DocumentFieldDto> {
 
     @Builder
-    public DocumentField(Integer id, Timestamp createdAt, boolean deleted, String data, Document document, Integer documentId, Field field, Integer fieldId, Integer taskNumber) {
+    public DocumentField(Integer id, Timestamp createdAt, boolean deleted, String data, Document document, Integer documentId, Field field, Integer fieldId, Integer taskNumber, Task task, Integer taskId) {
         super(id, createdAt, deleted);
         this.data = data;
         this.document = document;
@@ -24,6 +24,19 @@ public class DocumentField extends AbsEntityInteger implements EntityInterface<D
         this.field = field;
         this.fieldId = fieldId;
         this.taskNumber = taskNumber;
+        this.task = task;
+        this.taskId = taskId;
+    }
+
+    public DocumentField(String data, Document document, Integer documentId, Field field, Integer fieldId, Integer taskNumber, Task task, Integer taskId) {
+        this.data = data;
+        this.document = document;
+        this.documentId = documentId;
+        this.field = field;
+        this.fieldId = fieldId;
+        this.taskNumber = taskNumber;
+        this.task = task;
+        this.taskId = taskId;
     }
 
     public DocumentField(String data, Document document, Integer documentId, Field field, Integer fieldId, Integer taskNumber) {
@@ -65,6 +78,14 @@ public class DocumentField extends AbsEntityInteger implements EntityInterface<D
     @Column(name = "document_task_number", nullable = false)
     private Integer taskNumber;
 
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "task_id",updatable = false,insertable = false)
+    private Task task;
+
+    @Column(name = "task_id", nullable = false)
+    private Integer taskId;
+
     @Override
     public DocumentFieldDto toDto() {
         return DocumentFieldDto
@@ -74,7 +95,7 @@ public class DocumentField extends AbsEntityInteger implements EntityInterface<D
                 .data(data)
                 .taskNumber(taskNumber)
                 .documentId(documentId)
-                .field(field.toDto())
+                .field(field!=null?field.toDto():null)
                 .fieldId(fieldId)
                 .build();
     }

@@ -72,7 +72,7 @@ public class DocumentFieldService implements ServiceInterface<DocumentField, Doc
         return true;
     }
 
-    public List<DocumentField> addSpecial(UserDetails user, List<FormData> data, Date date){
+    public List<DocumentFieldDto> addSpecial(UserDetails user, List<FormData> data, Date date){
         try {
             System.out.println(date);
             Optional<User> optionalUser = userRepository.findByNameAndPass(user.getUsername(), user.getPassword());
@@ -99,6 +99,8 @@ public class DocumentFieldService implements ServiceInterface<DocumentField, Doc
                         .documentId(document.getId())
                         .data(d.value)
                         .fieldId(field.get().getId())
+                        .taskId(field.get().getTaskId())
+                        .task(field.get().getTask())
                         .deleted(false)
                         .build());
             }
@@ -109,7 +111,11 @@ public class DocumentFieldService implements ServiceInterface<DocumentField, Doc
                 d.setTaskNumber(max+1);
                 d=documentFieldRepository.save(d);
             });
-            return documentFields;
+            List<DocumentFieldDto> dtoList=new ArrayList<>();
+            documentFields.forEach(df->{
+                dtoList.add(df.toDto());
+            });
+            return dtoList;
 
         }catch (Exception e){
             e.printStackTrace();

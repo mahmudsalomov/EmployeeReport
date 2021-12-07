@@ -29,6 +29,7 @@
 <!--    </h1>-->
     <div class="col">
         <span>
+
             <a href="/logout" style="float: right!important;" class="btn-info btn">Chiqish</a>
         </span>
 <!--        <h1 class="">Hisobot</h1>-->
@@ -51,6 +52,7 @@
             <div class="container text-left">
                 <div class="row justify-content-center">
                     <div class="col-lg-3">
+                        <h5 id="ism" class="text-center mb-2">Ism</h5>
 <!--                        <h2 class="text-center" id="select_year">{Davr}</h2>-->
                         <h2 id="select_year" class="mb-5 text-center">Hisobot davrini tanlang</h2>
                         <div class="text-center">
@@ -353,57 +355,120 @@
     });
 
 
+    axios.get("/api/me")
+    .then(function (response) {
+        document.getElementById("ism").innerText=response.data;
+    })
+
     function drawTasks() {
         let date=document.getElementById("pick-date").value;
-        axios.get("/api/df/all/user/spec/"+date)
-            .then(function (response) {
 
-                if (response.status==200){
+        axios.get("/api/document/check/"+date)
+        .then(function (response) {
+            if (response.data=="true"){
+                axios.get("/api/df/all/user/spec/"+date)
+                    .then(function (response) {
 
-                    let data=response.data;
-                    let out="";
-                    console.log(data)
-                    if (data.length>0&&data[0].length>0){
+                        if (response.status==200){
 
-                        for (let i = 0; i <data.length ; i++) {
-                            let content="";
-                            out+="<table  class=\"table table-striped table-bordered mt-3 mb-3 shadow\" style=\"background: #ececec\">\n" +
-                                "                            <thead>\n" +
-                                "<!--                            <h3>asdad</h3>-->\n" +
-                                "                            <tr>\n" +
-                                "                                <th class=\"\" style=\"background: lightgray\" colspan=\"2\">\n" +
-                                "                                    <h3 class=\"\">"+(data[i][0]&&data[i][0].field?data[i][0].field.task.name:"")+"</h3>\n" +
-                                "                                    <button data-toggle=\"modal\" data-target=\"#editModal\" value='"+data[i][0].taskNumber+"' onclick='editFormGenerator(this.value)' class=\"btn-info btn\">Tahrirlash</button>\n" +
-                                "                                    <button value='"+(data[i][0]&&data[i][0].field?data[i][0].taskNumber:"")+"' onclick='deleteTask(this.value)' class=\"btn-danger btn\">O'chirish</button>\n" +
-                                "                                </th>\n" +
-                                "                            </tr>\n" +
-                                "                            <tr>\n" +
-                                "                                <th>Data</th>\n" +
-                                "                                <th>Izoh</th>\n" +
-                                "                            </tr>\n" +
-                                "                            </thead>\n" +
-                                "                            <tbody>"
-                            for (let j = 0; j <data[i].length ; j++) {
-                                content+="<tr class=\"\">\n" +
-                                    "                                <td class='w-50' style=\"color: white; font-weight: bold; background: #4a7e53\">"+data[i][j].field.name+"</td>\n" +
-                                    "                                <td class='w-50'>"+data[i][j].data+"</td>\n" +
-                                    "                            </tr>"
+                            let data=response.data;
+                            let out="";
+                            console.log(data)
+                            if (data.length>0&&data[0].length>0){
+
+                                for (let i = 0; i <data.length ; i++) {
+                                    let content="";
+                                    out+="<table  class=\"table table-striped table-bordered mt-3 mb-3 shadow\" style=\"background: #ececec\">\n" +
+                                        "                            <thead>\n" +
+                                        "<!--                            <h3>asdad</h3>-->\n" +
+                                        "                            <tr>\n" +
+                                        "                                <th class=\"\" style=\"background: lightgray\" colspan=\"2\">\n" +
+                                        "                                    <h3 class=\"\">"+(data[i][0]&&data[i][0].field?data[i][0].field.task.name:"")+"</h3>\n" +
+                                        // "                                    <button data-toggle=\"modal\" data-target=\"#editModal\" value='"+data[i][0].taskNumber+"' onclick='editFormGenerator(this.value)' class=\"btn-info btn\">Tahrirlash</button>\n" +
+                                        // "                                    <button value='"+(data[i][0]&&data[i][0].field?data[i][0].taskNumber:"")+"' onclick='deleteTask(this.value)' class=\"btn-danger btn\">O'chirish</button>\n" +
+                                        "                                </th>\n" +
+                                        "                            </tr>\n" +
+                                        "                            <tr>\n" +
+                                        "                                <th>Data</th>\n" +
+                                        "                                <th>Izoh</th>\n" +
+                                        "                            </tr>\n" +
+                                        "                            </thead>\n" +
+                                        "                            <tbody>"
+                                    for (let j = 0; j <data[i].length ; j++) {
+                                        content+="<tr class=\"\">\n" +
+                                            "                                <td class='w-50' style=\"color: white; font-weight: bold; background: #4a7e53\">"+data[i][j].field.name+"</td>\n" +
+                                            "                                <td class='w-50'>"+data[i][j].data+"</td>\n" +
+                                            "                            </tr>"
+                                    }
+                                    out+=content;
+                                    out+="</tbody>\n" +
+                                        "                        </table>"
+
+                                }
                             }
-                            out+=content;
-                            out+="</tbody>\n" +
-                                "                        </table>"
-
+                            document.getElementById("task_content").innerHTML=out;
                         }
-                    }
-                    document.getElementById("task_content").innerHTML=out;
-                }
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    })
+            }
+            else {
+                axios.get("/api/df/all/user/spec/"+date)
+                    .then(function (response) {
+
+                        if (response.status==200){
+
+                            let data=response.data;
+                            let out="";
+                            console.log(data)
+                            if (data.length>0&&data[0].length>0){
+
+                                for (let i = 0; i <data.length ; i++) {
+                                    let content="";
+                                    out+="<table  class=\"table table-striped table-bordered mt-3 mb-3 shadow\" style=\"background: #ececec\">\n" +
+                                        "                            <thead>\n" +
+                                        "<!--                            <h3>asdad</h3>-->\n" +
+                                        "                            <tr>\n" +
+                                        "                                <th class=\"\" style=\"background: lightgray\" colspan=\"2\">\n" +
+                                        "                                    <h3 class=\"\">"+(data[i][0]&&data[i][0].field?data[i][0].field.task.name:"")+"</h3>\n" +
+                                        "                                    <button data-toggle=\"modal\" data-target=\"#editModal\" value='"+data[i][0].taskNumber+"' onclick='editFormGenerator(this.value)' class=\"btn-info btn\">Tahrirlash</button>\n" +
+                                        "                                    <button value='"+(data[i][0]&&data[i][0].field?data[i][0].taskNumber:"")+"' onclick='deleteTask(this.value)' class=\"btn-danger btn\">O'chirish</button>\n" +
+                                        "                                </th>\n" +
+                                        "                            </tr>\n" +
+                                        "                            <tr>\n" +
+                                        "                                <th>Data</th>\n" +
+                                        "                                <th>Izoh</th>\n" +
+                                        "                            </tr>\n" +
+                                        "                            </thead>\n" +
+                                        "                            <tbody>"
+                                    for (let j = 0; j <data[i].length ; j++) {
+                                        content+="<tr class=\"\">\n" +
+                                            "                                <td class='w-50' style=\"color: white; font-weight: bold; background: #4a7e53\">"+data[i][j].field.name+"</td>\n" +
+                                            "                                <td class='w-50'>"+data[i][j].data+"</td>\n" +
+                                            "                            </tr>"
+                                    }
+                                    out+=content;
+                                    out+="</tbody>\n" +
+                                        "                        </table>"
+
+                                }
+                            }
+                            document.getElementById("task_content").innerHTML=out;
+                        }
 
 
-            })
-            .catch(function (error) {
-                console.log(error)
-            })
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    })
+            }
+        })
+
+
     }
+
+
 
     function deleteTask(taskNumber) {
         axios.delete("/api/df/delete/"+taskNumber)
