@@ -196,7 +196,7 @@
 <script src="../static/js/vanillajs-table.js" th:src="@{/js/vanillajs-table.js}"></script>
 <script>
     function viewSelectYear(e) {
-        console.log(e)
+        // console.log(e)
         if (e===""){
             document.getElementById("select_year").innerText="Hisobot davrini tanlang";
             document.getElementById("task_select_div").style.display="none"
@@ -206,7 +206,7 @@
         else {
             axios.get("/api/check_date/"+e)
             .then(function (response) {
-                console.log(response.data)
+                // console.log(response.data)
                 if (response.data==true){
                     drawTasks()
                     getAllDoneTasks(e)
@@ -235,9 +235,9 @@
     function getAllDoneTasks(date) {
         axios.get("/api/df/all/user/"+date)
         .then(function (response) {
-            console.log("ALLLLLLFIELDS")
-            console.log(response)
-            console.log(response.data)
+            // console.log("ALLLLLLFIELDS")
+            // console.log(response)
+            // console.log(response.data)
         })
         .catch(function (error) {
             console.log(error)
@@ -265,7 +265,7 @@
     function taskChangeHandler() {
         let value=document.getElementById("task_select").value;
         // let text=document.getElementById("task_select").innerText;
-        console.log(value)
+        // console.log(value)
         // if (value!==""){
             taskFormGenerator(value)
         // }
@@ -273,12 +273,12 @@
 
     function taskFormGenerator(taskId) {
         let out="";
-        console.log("TaskId = "+taskId)
+        // console.log("TaskId = "+taskId)
         if (taskId!=""){
             axios.get("/api/field/all/"+taskId)
                 .then(function (response) {
-                    console.log(response)
-                    console.log(response.data)
+                    // console.log(response)
+                    // console.log(response.data)
                     let data=response.data;
                     for (let i = 0; i <data.length ; i++) {
                         document.getElementById("task_title").innerText=data[i].task.name
@@ -340,7 +340,7 @@
         event.preventDefault();
         axios.post("/api/df/add/special/"+document.getElementById("pick-date").value,data)
         .then(function (response) {
-            console.log(response)
+            // console.log(response)
             drawTasks()
             // $('#save_modal').modal().hide();
             // $("#save_modal .close").click()
@@ -359,7 +359,7 @@
         event.preventDefault();
         axios.post("/api/df/edit/special/"+document.getElementById("pick-date").value,data)
             .then(function (response) {
-                console.log(response)
+                // console.log(response)
                 drawTasks()
                 // $('#save_modal').modal().hide();
                 // $("#save_modal .close").click()
@@ -392,7 +392,7 @@
 
                             let data=response.data;
                             let out="";
-                            console.log(data)
+                            // console.log(data)
                             if (data.length>0&&data[0].length>0){
 
                                 for (let i = 0; i <data.length ; i++) {
@@ -440,7 +440,7 @@
 
                             let data=response.data;
                             let out="";
-                            console.log(data)
+                            // console.log(data)
                             if (data.length>0&&data[0].length>0){
 
                                 for (let i = 0; i <data.length ; i++) {
@@ -492,7 +492,7 @@
     function deleteTask(taskNumber) {
         axios.delete("/api/df/delete/"+taskNumber)
         .then(function (res) {
-            console.log(res.data)
+            // console.log(res.data)
             drawTasks()
             // setTimeout(, 1000);
 
@@ -509,7 +509,7 @@
     function edit(taskNumber) {
         axios.get("/api/df/one/spec/"+taskNumber)
         .then(function (response) {
-            console.log(response.data)
+            // console.log(response.data)
         })
         .catch(function (error) {
             console.log(error)
@@ -518,12 +518,12 @@
 
     function editFormGenerator(taskNumber) {
         let out="";
-        console.log("taskNumber = "+taskNumber)
+        // console.log("taskNumber = "+taskNumber)
         if (taskNumber!=""){
             axios.get("/api/df/one/spec/"+taskNumber)
                 .then(function (response) {
-                    console.log(response)
-                    console.log(response.data)
+                    // console.log(response)
+                    // console.log(response.data)
                     let data=response.data;
 
 
