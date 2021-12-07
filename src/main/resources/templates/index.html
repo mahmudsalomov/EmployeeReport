@@ -204,11 +204,30 @@
 
         }
         else {
-            drawTasks()
-            getAllDoneTasks(e)
-            taskSelect();
-            document.getElementById("select_year").innerText=e;
-            document.getElementById("task_content").style.display="block"
+            axios.get("/api/check_date/"+e)
+            .then(function (response) {
+                console.log(response.data)
+                if (response.data==true){
+                    drawTasks()
+                    getAllDoneTasks(e)
+                    taskSelect();
+                    document.getElementById("select_year").innerText=e;
+                    document.getElementById("task_content").style.display="block"
+                }
+                else{
+                    document.getElementById("select_year").innerText="Hisobot davrini tanlang";
+                    document.getElementById("task_select_div").style.display="none";
+                    document.getElementById("task_content").style.display="none";
+                    alert("Vaqtni to'g'ri tanlang!")
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+                document.getElementById("select_year").innerText="Hisobot davrini tanlang";
+                document.getElementById("task_select_div").style.display="none"
+                document.getElementById("task_content").style.display="none"
+            })
+
 
         }
     }

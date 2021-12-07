@@ -11,6 +11,7 @@ import uz.java.maniac.model.template.FormData;
 import uz.java.maniac.repository.UserRepository;
 import uz.java.maniac.service.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,30 +62,13 @@ public class RestController {
         return ResponseEntity.ok("ok");
     }
 
+    @GetMapping("/check_date/{date}")
+    public HttpEntity<?> checkDate(@PathVariable Date date){
+        if (date.after(new Date())) return ResponseEntity.ok(false);
+        return ResponseEntity.ok(true);
+    }
 
-    //Task
 
-//    @PostMapping("add/task")
-//    public HttpEntity<?> add(@RequestBody TaskDto dto){
-//
-//        return ResponseEntity.ok("");
-//    }
-//
-//    @PutMapping("edit/task")
-//    public HttpEntity<?> edit(@RequestBody TaskDto dto){
-//
-//        return ResponseEntity.ok("");
-//    }
-//
-//    @GetMapping("all/task")
-//    public HttpEntity<?> all(){
-//        return ResponseEntity.ok(taskService.all());
-//    }
-//
-//    @GetMapping("one/task/{id}")
-//    public HttpEntity<?> one(@PathVariable Integer id){
-//        return ResponseEntity.ok(taskService.one(id));
-//    }
 
 
 
